@@ -1,55 +1,39 @@
-# İleri Python Programlama – Hafta 4 Lab Ödevi
+# Hafta 4 - Üreteçler ve functools
 
-**Ders:** İleri Python Programlama  
-**Kurum:** İstanbul Nişantaşı Üniversitesi  
-**Dönem:** 2026–2027 Güz  
+İleri Python Programlama dersi 4. hafta lab ödevi. Hafta 3'teki uzay oyunu projesine üreteçler, boru hattı ve önbellekli rota hesabı eklendi.
 
-## Proje Yapısı
+## Testleri çalıştırmak
 
 ```
-IleriPython_Hafta4/
-├── uzay_oyunu/
-│   ├── galaksi.py       # Galaksi verisi (Hafta 3 tabanı)
-│   ├── oyun.py          # Oyun döngüsü ve yolculuk fonksiyonları
-│   └── akis.py          # Görev 1-4 + Bonus üreteçleri
-├── istatistik.py        # Görev 5 – map/filter/reduce/partial
-├── bonus_zamanlayici.py # Bonus – meşgul bekleme örneği
-├── veri/
-│   └── seyir.txt        # Görev 3 veri dosyası
-└── tests/
-    ├── test_galaksi.py  # Hafta 3 testleri
-    └── test_akis.py     # Hafta 4 testleri
-```
-
-## Kurulum ve Testler
-
-```bash
 uv run pytest
 ```
 
-## Görev 4 – Önbellek Performans Ölçümü
+## Görev 1 - Fibonacci üreteci
 
-`rota_sayaci()` fonksiyonunun `adim=20` için performans karşılaştırması:
+Sonsuz fibonacci üreteci yazıldı. next() ile ilk üç değer, islice ile ilk 12 değer, takewhile ile 100'den küçük değerler alındı. Aynı üreteç nesnesinden ikinci islice çağrısının farklı sonuç döndürdüğü test ile gösterildi.
 
-| Sürüm         | Süre (sn) | Notlar                        |
-|---------------|-----------|-------------------------------|
-| Önbelleksiz   | ~0.45 s   | Üstel büyüme, tekrar hesaplar |
-| `@lru_cache`  | ~0.00003 s| Tüm alt sonuçlar önbellekte   |
+## Görev 2 - Yakıt göstergesi
 
-**cache_info() çıktısı (adim=40 sonrası):**
+yakit_gostergesi üreteci her adımda yakıtı tüketim kadar azaltıp kalanı veriyor, sıfıra inince duruyor. travel() fonksiyonuna bağlandı, yakıt bitince oyuncu "Yakıtın bitti, uzayda sürükleniyorsun..." mesajıyla kaybediyor.
+
+## Görev 3 - Seyir defteri boru hattı
+
+veri/seyir.txt okundu. satirlari_oku, ayristir ve uzun_yolculuklar olmak üzere üç üreçten oluşan bir boru hattı kuruldu. Hiçbiri dosyayı listeye okumuyor, her şey tembel çalışıyor.
+
+## Görev 4 - Önbellekli rota sayacı
+
+rota_sayaci fonksiyonu adim=20 için önbelleksiz çalıştırıldığında yaklaşık 0.45 saniye sürdü. lru_cache eklenince aynı hesap 0.00003 saniyede bitti çünkü daha önce hesaplanan gezegen-adım ikilisi tekrar hesaplanmıyor, önbellekten geliyor.
+
+adim=40 sonrasında cache_info şu çıktıyı verdi:
+
 ```
 CacheInfo(hits=..., misses=205, maxsize=None, currsize=205)
 ```
 
-`@lru_cache` ile örtüşen alt problemler (aynı gezegen–adım çifti) yalnızca
-bir kez hesaplanır. Özyinelemeli çağrı sayısı O(n) düzeyine iner;
-önbelleksiz sürümde bu O(bağlantı_sayısı^n) olurdu.
+## Görev 5 - map, filter, reduce ve partial
 
-## Bonus – Meşgul Bekleme
+istatistik.py içinde her soru iki farklı şekilde yanıtlandı, biri map/filter/reduce ile diğeri liste üreteci veya sum ile. Liste üreteci ve sum daha okunaklı çünkü ne istediğimiz direkt görünüyor. partial ile yolculuk fonksiyonundan hiz=3 sabit hizli_yolculuk türetildi.
 
-`zamanlayici()` üreteci, `time.perf_counter()` ile sürekli döngüde zaman
-kontrolü yapar. Bu **meşgul bekleme (busy waiting)** tekniğidir:
-CPU hiç uyumaz, sadece zaman doldu mu diye kontrol eder.
+## Bonus - Meşgul bekleme
 
-`time.sleep()` farkı: işletim sistemine kontrolü bırakır, CPU başka
-işlemlere tahsis edilir → daha verimli ve pil dostu.
+zamanlayici üreteci içinde perf_counter ile sürekli zaman kontrolü yapılıyor. CPU hiç uyumuyor, sadece zaman doldu mu diye bakıyor. Buna meşgul bekleme deniyor. time.sleep kullansaydık işletim sistemi cpu'yu o süreliğine başka işlere verirdi ama burada kasıtlı olarak busy-wait kullanıldı.
