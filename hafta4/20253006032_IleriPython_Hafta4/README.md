@@ -14,7 +14,7 @@ Sonsuz fibonacci üreteci yazıldı. next() ile ilk üç değer, islice ile ilk 
 
 ## Görev 2 - Yakıt göstergesi
 
-yakit_gostergesi üreteci her adımda yakıtı tüketim kadar azaltıp kalanı veriyor, sıfıra inince duruyor. travel() fonksiyonuna bağlandı, yakıt bitince oyuncu "Yakıtın bitti, uzayda sürükleniyorsun..." mesajıyla kaybediyor.
+yakit_gostergesi üreteci her adımda yakıtı tüketim kadar azaltıp kalanı veriyor, sıfıra inince duruyor. travel() fonksiyonuna bağlandı (Hafta 3'teki oyun kodu bu projeye taşındı, gösterge oyunun başında galaksideki yakıtla kuruluyor ve her yolculukta bir değer çekiliyor), yakıt bitince oyuncu "Yakıtın bitti, uzayda sürükleniyorsun..." mesajıyla kaybediyor.
 
 ## Görev 3 - Seyir defteri boru hattı
 
@@ -22,12 +22,12 @@ veri/seyir.txt okundu. satirlari_oku, ayristir ve uzun_yolculuklar olmak üzere 
 
 ## Görev 4 - Önbellekli rota sayacı
 
-rota_sayaci fonksiyonu adim=20 için önbelleksiz çalıştırıldığında yaklaşık 0.45 saniye sürdü. lru_cache eklenince aynı hesap 0.00003 saniyede bitti çünkü daha önce hesaplanan gezegen-adım ikilisi tekrar hesaplanmıyor, önbellekten geliyor.
+rota_sayaci fonksiyonu adim=20 için önbelleksiz çalıştırıldığında yaklaşık 0.90 saniye sürdü. lru_cache eklenince aynı hesap 0.00005 saniyede bitti çünkü daha önce hesaplanan gezegen-adım ikilisi tekrar hesaplanmıyor, önbellekten geliyor.
 
-adim=40 sonrasında cache_info şu çıktıyı verdi:
+Yeni bir sayaçla adim=40 hesaplandıktan sonra cache_info şu çıktıyı verdi:
 
 ```
-CacheInfo(hits=..., misses=205, maxsize=None, currsize=205)
+CacheInfo(hits=97, misses=101, maxsize=None, currsize=101)
 ```
 
 ## Görev 5 - map, filter, reduce ve partial

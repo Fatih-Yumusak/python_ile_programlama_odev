@@ -1,16 +1,10 @@
 from __future__ import annotations
 
-galaksi: dict = {
-    "gezegenler": ["dünya", "centauri", "sirius", "orion", "kara_delik"],
-    "baglantilar": {
-        "dünya":      ["sirius", "centauri"],
-        "sirius":     ["dünya", "orion", "kara_delik"],
-        "centauri":   ["dünya", "orion"],
-        "orion":      ["sirius", "centauri"],
-        "kara_delik": ["sirius"],
-    },
-    "yakit": 100,
-}
+import json
+from pathlib import Path
+
+with open(Path(__file__).parent / "galaksi.json", encoding="utf-8") as _f:
+    galaksi: dict = json.load(_f)
 
 
 def gezegen_var_mi(ad: str) -> bool:
